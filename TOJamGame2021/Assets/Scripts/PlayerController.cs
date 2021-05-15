@@ -45,18 +45,26 @@ public class PlayerController : MonoBehaviour
     //When the player hits a collider
     private void OnTriggerEnter(Collider collision)
     {
-        Debug.Log("HIT!");
+        //Hitting the kill zone
         if (collision.gameObject.tag == "KillZone")
         {
             Die();
             Debug.Log("HIT!");
+        }
+
+        //Hitting a coin
+        if(collision.gameObject.tag == "Coin")
+        {
+            collision.gameObject.SetActive(false);
+            Debug.Log("Coin Collected");
+            GameManager.Singleton.AddToGameScore(1);
         }
     }
 
     //When the player dies, what happens
     void Die()
     {
-        Destroy(this.gameObject);
+        this.gameObject.SetActive(false);
     }
 
     //Setting the game level

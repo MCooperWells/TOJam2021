@@ -7,6 +7,7 @@ public class GameManager : MonoBehaviour
 {
     public static int gameLevel = 1;
     public static GameManager Singleton = null;
+    private static int gameScore = 0;
 
     void Awake()
     {
@@ -38,21 +39,24 @@ public class GameManager : MonoBehaviour
     public void LoadLevel1()
     {
         gameLevel = 1;
-        SceneManager.LoadScene("SampleScene");
+        gameScore = 0;
+        SceneManager.LoadScene("Level_01");
     }
 
     //Load level 2
     public void LoadLevel2()
     {
         gameLevel = 2;
-        SceneManager.LoadScene("SampleScene");
+        gameScore = 0;
+        SceneManager.LoadScene("Level_01");
     }
 
     //Load level 3
     public void LoadLevel3()
     {
         gameLevel = 3;
-        SceneManager.LoadScene("SampleScene");
+        gameScore = 0;
+        SceneManager.LoadScene("Level_01");
     }
 
     public void UpdateLevel()
@@ -67,5 +71,15 @@ public class GameManager : MonoBehaviour
     public void ExitGame()
     {
         Application.Quit();
+    }
+
+    public void AddToGameScore(int amountGained)
+    {
+        gameScore += amountGained;
+    }
+
+    public int GetGameScore()
+    {
+        return gameScore;
     }
 }

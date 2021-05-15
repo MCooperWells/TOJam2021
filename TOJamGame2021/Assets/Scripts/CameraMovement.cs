@@ -59,7 +59,7 @@ public class CameraMovement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Debug.Log("Move Camera bool = " + bMoveCamera + " and Timer =" + timer);
+        //Debug.Log("Move Camera bool = " + bMoveCamera + " and Timer =" + timer);
         if (bMoveCamera == false)
         {
             timer += Time.deltaTime;

@@ -5,6 +5,7 @@ TagManager:
   serializedVersion: 2
   tags:
   - KillZone
+  - Coin
   layers:
   - Default
   - TransparentFX

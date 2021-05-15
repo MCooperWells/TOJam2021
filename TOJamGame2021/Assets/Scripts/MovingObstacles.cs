@@ -18,7 +18,7 @@ public class MovingObstacles : MonoBehaviour
     public float speedLevel2;
     public float speedLevel3;
 
-    void Start()
+    protected void Start()
     {
         SetGameLevel(GameManager.gameLevel);
         pos = transform.position;
@@ -85,7 +85,16 @@ public class MovingObstacles : MonoBehaviour
                 }
                 break;
             default:
- 
+                if (!ExistsInLevel1)
+                {
+                    Destroy(this.gameObject);
+                }
+                else
+                {
+                    speed = speedLevel1;
+                }
+                break;
+
                 break;
         }
     }
