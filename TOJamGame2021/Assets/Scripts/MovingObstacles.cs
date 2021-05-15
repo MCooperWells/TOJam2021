@@ -9,10 +9,19 @@ public class MovingObstacles : MonoBehaviour
     private Vector3 pos;
     // Start is called before the first frame update
 
+    //Level changes
+    public bool ExistsInLevel1;
+    public bool ExistsInLevel2;
+    public bool ExistsInLevel3;
+
+    public float speedLevel1;
+    public float speedLevel2;
+    public float speedLevel3;
+
     void Start()
     {
+        SetGameLevel(GameManager.gameLevel);
         pos = transform.position;
-
     }
 
     // Update is called once per frame
@@ -38,6 +47,46 @@ public class MovingObstacles : MonoBehaviour
         {
             float newZ = Mathf.Sin(Time.time * speed) * height + pos.z;
             transform.position = new Vector3(transform.position.x, transform.position.y, newZ);
+        }
+    }
+
+    void SetGameLevel(int level)
+    {
+        switch (level)
+        {
+            case 1:
+                if(!ExistsInLevel1)
+                {
+                    Destroy(this.gameObject);
+                }
+                else
+                {
+                    speed = speedLevel1;
+                }
+                break;
+            case 2:
+                if (!ExistsInLevel2)
+                {
+                    Destroy(this.gameObject);
+                }
+                else
+                {
+                    speed = speedLevel2;
+                }
+                break;
+            case 3:
+                if (!ExistsInLevel3)
+                {
+                    Destroy(this.gameObject);
+                }
+                else
+                {
+                    speed = speedLevel3;
+                }
+                break;
+            default:
+ 
+                break;
         }
     }
 }

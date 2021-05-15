@@ -55,6 +55,14 @@ public class GameManager : MonoBehaviour
         SceneManager.LoadScene("SampleScene");
     }
 
+    public void UpdateLevel()
+    {
+        if(gameLevel < 3)
+        {
+            gameLevel++;
+        }    
+    }
+
     //Exits the game
     public void ExitGame()
     {

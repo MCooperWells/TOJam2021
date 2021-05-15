@@ -4,10 +4,12 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
-    private int gameLevel;
-
     //Public player speed, determines how fast the player moves
-    public float playerSpeed;
+    private float playerSpeed;
+
+    public float playerSpeedlevel1;
+    public float playerSpeedlevel2;
+    public float playerSpeedlevel3;
 
     //Rigidbody used for adding movement
     private Rigidbody rigidBody;
@@ -19,9 +21,7 @@ public class PlayerController : MonoBehaviour
     void Start()
     {
         //Get the game manager's level
-        gameLevel = GameManager.gameLevel;
-
-        SetGameLevel(gameLevel);
+        SetGameLevel(GameManager.gameLevel);
 
         //Get the rigidbody
         rigidBody = GetComponent<Rigidbody>();
@@ -62,6 +62,23 @@ public class PlayerController : MonoBehaviour
     //Setting the game level
     void SetGameLevel(int level)
     {
+        switch (level)
+        {
+            case 1:
+                playerSpeed = playerSpeedlevel1;
 
+                break;
+            case 2:
+                playerSpeed = playerSpeedlevel2;
+
+                break;
+            case 3:
+                playerSpeed = playerSpeedlevel3;
+
+                break;
+            default:
+                playerSpeed = playerSpeedlevel1;
+                break;
+        }
     }
 }

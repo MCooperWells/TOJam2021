@@ -69,40 +69,6 @@ public class CameraMovement : MonoBehaviour
                 timer = 0f;
             }
         }
-
-        //If the timer is above 0 (started from -3 means there is a 3 second count down)
-        /*if(timer > 0.0f)
-        {
-            //If the timer is less than 2x the camera duration, then the next location is 1
-            if (timer < (2.0f * cameraDuration))
-            {
-                nextLocation = 1;
-            }
-
-            //If the timer is less than 4x the camera duration, then move to location 2
-            else if (timer < (4.0f * cameraDuration))
-            {
-                nextLocation = 2;
-            }
-
-            //If the timer is less than 6x the camera duration, then move to location 3
-            else if (timer < (6.0f * cameraDuration))
-            {
-                nextLocation = 3;
-            }
-
-            //If the timer is less than 8x the camera duration, then move to location 0 (back to the start)
-            else if (timer < (8.0f * cameraDuration))
-            {
-                nextLocation = 0;
-            }
-
-            //If the timer is greater than than 8x the camera duration, then reset the timer
-            else if (timer > (8.0f * cameraDuration))
-            {
-                timer = 0.0f;
-            }
-        }*/
     }
 
     void FixedUpdate()
@@ -131,7 +97,7 @@ public class CameraMovement : MonoBehaviour
         }
     }
 
-    //Setting the game level
+    //Setting the game level 
     void SetGameLevel(int level)
     {
         switch(level)
@@ -139,14 +105,17 @@ public class CameraMovement : MonoBehaviour
             case 1:
                 cameraSpeed = cameraSpeedLevel1;
                 cameraPauseDuration = cameraPauseDurationLevel1;
+
                 break;
             case 2:
                 cameraSpeed = cameraSpeedLevel2;
                 cameraPauseDuration = cameraPauseDurationLevel2;
+
                 break;
             case 3:
                 cameraSpeed = cameraSpeedLevel3;
                 cameraPauseDuration = cameraPauseDurationLevel3;
+
                 break;
             default:
                 cameraSpeed = cameraSpeedLevel1;
