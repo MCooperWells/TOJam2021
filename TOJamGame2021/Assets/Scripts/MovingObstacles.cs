@@ -94,8 +94,6 @@ public class MovingObstacles : MonoBehaviour
                     speed = speedLevel1;
                 }
                 break;
-
-                break;
         }
     }
 }

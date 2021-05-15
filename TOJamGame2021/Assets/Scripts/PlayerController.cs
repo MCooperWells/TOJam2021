@@ -18,10 +18,16 @@ public class PlayerController : MonoBehaviour
     private Vector3 moveVelocity;
 
     // Start is called before the first frame update
+    public GameObject ingameMenu;
+
+    public GameObject cameraObject;
+    
     void Start()
     {
         //Get the game manager's level
         SetGameLevel(GameManager.gameLevel);
+
+        ingameMenu.SetActive(false);
 
         //Get the rigidbody
         rigidBody = GetComponent<Rigidbody>();
@@ -59,11 +65,20 @@ public class PlayerController : MonoBehaviour
             Debug.Log("Coin Collected");
             GameManager.Singleton.AddToGameScore(1);
         }
+
+        //Hitting spikes
+        if(collision.gameObject.tag == "Spike")
+        {
+
+        }
     }
 
     //When the player dies, what happens
     void Die()
     {
+        ingameMenu.SetActive(true);
+        CameraMovement cam = cameraObject.GetComponent<CameraMovement>();
+        cam.bIsPlayerAlive = false;
         this.gameObject.SetActive(false);
     }
 

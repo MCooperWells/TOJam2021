@@ -20,7 +20,6 @@ public class GameManager : MonoBehaviour
         {
             Destroy(this.gameObject);
         }
-
     }
 
     //Load in the different levels
@@ -55,6 +54,13 @@ public class GameManager : MonoBehaviour
     public void LoadLevel3()
     {
         gameLevel = 3;
+        gameScore = 0;
+        SceneManager.LoadScene("Level_01");
+    }
+
+    public void RestartLevel()
+    {
+        Debug.Log("Restarting Level");
         gameScore = 0;
         SceneManager.LoadScene("Level_01");
     }

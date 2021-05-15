@@ -17,6 +17,9 @@ public class CameraMovement : MonoBehaviour
     //Pause camera movement
     private bool bMoveCamera;
 
+    //player status
+    public bool bIsPlayerAlive;
+    
     //Timer
     private float timer = 0.0f;
 
@@ -54,6 +57,7 @@ public class CameraMovement : MonoBehaviour
         this.gameObject.transform.position = cameraVectorLocations[nextLocation];
 
         bMoveCamera = false;
+        bIsPlayerAlive = true;
     }
 
     // Update is called once per frame
@@ -73,27 +77,30 @@ public class CameraMovement : MonoBehaviour
 
     void FixedUpdate()
     {
-        if(this.gameObject.transform.position == cameraVectorLocations[nextLocation])
+        if(bIsPlayerAlive)
         {
-            bMoveCamera = false;
-            nextLocation++;
-            if(nextLocation > 3)
+            if (this.gameObject.transform.position == cameraVectorLocations[nextLocation])
             {
-                nextLocation = 0;
+                bMoveCamera = false;
+                nextLocation++;
+                if (nextLocation > 3)
+                {
+                    nextLocation = 0;
+                }
             }
-        }    
-        
-        if(bMoveCamera)
-        {
-            //Moving the camera around
-            this.gameObject.transform.position =
-                Vector3.MoveTowards(this.gameObject.transform.position,
-                new Vector3(
-                    cameraVectorLocations[nextLocation].x,
-                    this.gameObject.transform.position.y,
-                    cameraVectorLocations[nextLocation].z 
-                    ),
-                cameraSpeed * Time.deltaTime);
+
+            if (bMoveCamera)
+            {
+                //Moving the camera around
+                this.gameObject.transform.position =
+                    Vector3.MoveTowards(this.gameObject.transform.position,
+                    new Vector3(
+                        cameraVectorLocations[nextLocation].x,
+                        this.gameObject.transform.position.y,
+                        cameraVectorLocations[nextLocation].z
+                        ),
+                    cameraSpeed * Time.deltaTime);
+            }
         }
     }
 
