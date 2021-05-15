@@ -21,12 +21,22 @@ public class CameraMovement : MonoBehaviour
     private float timer = 0.0f;
 
     //Camera speed and duration. Both affec the speed the camera moves and how long it has to move
-    public float cameraSpeed;
-    public float cameraPauseDuration;
+    private float cameraSpeed;
+    public float cameraSpeedLevel1;
+    public float cameraSpeedLevel2;
+    public float cameraSpeedLevel3;
+
+    private float cameraPauseDuration;
+    public float cameraPauseDurationLevel1;
+    public float cameraPauseDurationLevel2;
+    public float cameraPauseDurationLevel3;
 
     // Start is called before the first frame update
     void Start()
     {
+        //Before anything else, set the game level
+        SetGameLevel(GameManager.gameLevel);
+
         //Set the camera vector2 array to be as long as the transform location arrya
         cameraVectorLocations = new Vector3[cameraTransformLocations.Length];
 
@@ -118,6 +128,30 @@ public class CameraMovement : MonoBehaviour
                     cameraVectorLocations[nextLocation].z 
                     ),
                 cameraSpeed * Time.deltaTime);
+        }
+    }
+
+    //Setting the game level
+    void SetGameLevel(int level)
+    {
+        switch(level)
+        {
+            case 1:
+                cameraSpeed = cameraSpeedLevel1;
+                cameraPauseDuration = cameraPauseDurationLevel1;
+                break;
+            case 2:
+                cameraSpeed = cameraSpeedLevel2;
+                cameraPauseDuration = cameraPauseDurationLevel2;
+                break;
+            case 3:
+                cameraSpeed = cameraSpeedLevel3;
+                cameraPauseDuration = cameraPauseDurationLevel3;
+                break;
+            default:
+                cameraSpeed = cameraSpeedLevel1;
+                cameraPauseDuration = cameraPauseDurationLevel1;
+                break;
         }
     }
 }

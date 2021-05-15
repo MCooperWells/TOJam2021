@@ -102,8 +102,12 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
-  cameraSpeed: 2
-  cameraDuration: 2.8
+  cameraSpeedLevel1: 2
+  cameraSpeedLevel2: 4
+  cameraSpeedLevel3: 6
+  cameraPauseDurationLevel1: 3
+  cameraPauseDurationLevel2: 2
+  cameraPauseDurationLevel3: 1
 --- !u!1 &6915312018604708027
 GameObject:
   m_ObjectHideFlags: 0

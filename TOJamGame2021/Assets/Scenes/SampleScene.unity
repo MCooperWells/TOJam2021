@@ -337,11 +337,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: db297f9feebcdae49b4f9310c35699c1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  splashScreenName: 
-  mainMenuName: 
-  level1Name: Level_01
-  level2Name: 
-  level3Name: 
 --- !u!4 &929761484
 Transform:
   m_ObjectHideFlags: 0

@@ -5,7 +5,7 @@ using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
-    public static int gameLevel;
+    public static int gameLevel = 1;
     public static GameManager Singleton = null;
 
     void Awake()
@@ -38,21 +38,21 @@ public class GameManager : MonoBehaviour
     public void LoadLevel1()
     {
         gameLevel = 1;
-        SceneManager.LoadScene("Level_01");
+        SceneManager.LoadScene("SampleScene");
     }
 
     //Load level 2
     public void LoadLevel2()
     {
         gameLevel = 2;
-        SceneManager.LoadScene("Level_01");
+        SceneManager.LoadScene("SampleScene");
     }
 
     //Load level 3
     public void LoadLevel3()
     {
         gameLevel = 3;
-        SceneManager.LoadScene("Level_01");
+        SceneManager.LoadScene("SampleScene");
     }
 
     //Exits the game
