@@ -67,9 +67,10 @@ public class PlayerController : MonoBehaviour
         }
 
         //Hitting spikes
-        if(collision.gameObject.tag == "Spike")
+        if(collision.gameObject.tag == "Spikes")
         {
-
+            Die();
+            Debug.Log("Player killed by spikes!");
         }
     }
 
