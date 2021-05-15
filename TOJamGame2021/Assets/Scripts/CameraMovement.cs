@@ -14,13 +14,15 @@ public class CameraMovement : MonoBehaviour
     //The next location the camera is going to move towards
     private int nextLocation = 0;
 
+    //Pause camera movement
+    private bool bMoveCamera;
 
     //Timer
-    private float timer = -4.0f;
+    private float timer = 0.0f;
 
     //Camera speed and duration. Both affec the speed the camera moves and how long it has to move
     public float cameraSpeed;
-    public float cameraDuration;
+    public float cameraPauseDuration;
 
     // Start is called before the first frame update
     void Start()
@@ -40,19 +42,26 @@ public class CameraMovement : MonoBehaviour
 
         //Set the location of the camera to be at the first location
         this.gameObject.transform.position = cameraVectorLocations[nextLocation];
+
+        bMoveCamera = false;
     }
 
     // Update is called once per frame
     void Update()
     {
-        //Timer
-        timer += Time.deltaTime;
-
-        //Debug
-        Debug.Log("Camera's next location is " + nextLocation);
+        Debug.Log("Move Camera bool = " + bMoveCamera + " and Timer =" + timer);
+        if (bMoveCamera == false)
+        {
+            timer += Time.deltaTime;
+            if(timer > cameraPauseDuration)
+            {
+                bMoveCamera = true;
+                timer = 0f;
+            }
+        }
 
         //If the timer is above 0 (started from -3 means there is a 3 second count down)
-        if(timer > 0.0f)
+        /*if(timer > 0.0f)
         {
             //If the timer is less than 2x the camera duration, then the next location is 1
             if (timer < (2.0f * cameraDuration))
@@ -83,40 +92,32 @@ public class CameraMovement : MonoBehaviour
             {
                 timer = 0.0f;
             }
-        }
+        }*/
     }
 
     void FixedUpdate()
     {
-        //Moving the camera around
-        this.gameObject.transform.position =
-            Vector3.MoveTowards(this.gameObject.transform.position,
-            new Vector3(
-                cameraVectorLocations[nextLocation].x,
-                this.gameObject.transform.position.y,
-                cameraVectorLocations[nextLocation].z 
-                ),
-            cameraSpeed * Time.deltaTime);
+        if(this.gameObject.transform.position == cameraVectorLocations[nextLocation])
+        {
+            bMoveCamera = false;
+            nextLocation++;
+            if(nextLocation > 3)
+            {
+                nextLocation = 0;
+            }
+        }    
+        
+        if(bMoveCamera)
+        {
+            //Moving the camera around
+            this.gameObject.transform.position =
+                Vector3.MoveTowards(this.gameObject.transform.position,
+                new Vector3(
+                    cameraVectorLocations[nextLocation].x,
+                    this.gameObject.transform.position.y,
+                    cameraVectorLocations[nextLocation].z 
+                    ),
+                cameraSpeed * Time.deltaTime);
+        }
     }
 }
-
-
-/*
-       switch(nextLocation)
-       {
-           case 0:
-               this.gameObject.transform.position = new Vector3(cameraVector2Locations[nextLocation].x, this.gameObject.transform.position.y, cameraVector2Locations[nextLocation].y);
-               break;
-           case 1: 
-               this.gameObject.transform.position = new Vector3(cameraVector2Locations[nextLocation].x, this.gameObject.transform.position.y, cameraVector2Locations[nextLocation].y);
-               break;
-           case 2:
-               this.gameObject.transform.position = new Vector3(cameraVector2Locations[nextLocation].x, this.gameObject.transform.position.y, cameraVector2Locations[nextLocation].y);
-               break;
-           case 3:
-               this.gameObject.transform.position = new Vector3(cameraVector2Locations[nextLocation].x, this.gameObject.transform.position.y, cameraVector2Locations[nextLocation].y);
-               break;
-
-           default:
-               break;
-       }    */

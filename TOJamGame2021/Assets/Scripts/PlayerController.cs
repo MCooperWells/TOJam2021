@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
+    private int gameLevel;
+
     //Public player speed, determines how fast the player moves
     public float playerSpeed;
 
@@ -16,6 +18,11 @@ public class PlayerController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        //Get the game manager's level
+        gameLevel = GameManager.gameLevel;
+
+        SetGameLevel(gameLevel);
+
         //Get the rigidbody
         rigidBody = GetComponent<Rigidbody>();
     }
@@ -35,6 +42,7 @@ public class PlayerController : MonoBehaviour
         rigidBody.MovePosition(rigidBody.position + moveVelocity * Time.deltaTime);
     }
 
+    //When the player hits a collider
     private void OnTriggerEnter(Collider collision)
     {
         Debug.Log("HIT!");
@@ -45,8 +53,15 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    //When the player dies, what happens
     void Die()
     {
         Destroy(this.gameObject);
+    }
+
+    //Setting the game level
+    void SetGameLevel(int level)
+    {
+
     }
 }
