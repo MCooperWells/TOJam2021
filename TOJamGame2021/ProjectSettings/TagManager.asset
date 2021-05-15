@@ -6,6 +6,7 @@ TagManager:
   tags:
   - KillZone
   - Coin
+  - Spikes
   layers:
   - Default
   - TransparentFX

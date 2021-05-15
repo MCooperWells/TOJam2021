@@ -12,7 +12,8 @@ public class CameraMovement : MonoBehaviour
 
 
     //The next location the camera is going to move towards
-    private int nextLocation = 0;
+    private int nextLocation = 1;
+    private int startingLocation = 0;
 
     //Pause camera movement
     private bool bMoveCamera;
@@ -34,6 +35,11 @@ public class CameraMovement : MonoBehaviour
     public float cameraPauseDurationLevel2;
     public float cameraPauseDurationLevel3;
 
+    private int NumberLaps = 0;
+
+    // Start is called before the first frame update
+    public GameObject nextLevelMenu;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -54,10 +60,11 @@ public class CameraMovement : MonoBehaviour
         }
 
         //Set the location of the camera to be at the first location
-        this.gameObject.transform.position = cameraVectorLocations[nextLocation];
+        this.gameObject.transform.position = cameraVectorLocations[startingLocation];
 
         bMoveCamera = false;
         bIsPlayerAlive = true;
+        nextLevelMenu.SetActive(false);
     }
 
     // Update is called once per frame
@@ -79,6 +86,14 @@ public class CameraMovement : MonoBehaviour
     {
         if(bIsPlayerAlive)
         {
+            if (this.gameObject.transform.position == cameraVectorLocations[startingLocation] && nextLocation == 0)
+            {
+                LevelComplete();
+                NumberLaps++;
+                Debug.Log("Number of Laps Completed " + NumberLaps);
+            }
+
+
             if (this.gameObject.transform.position == cameraVectorLocations[nextLocation])
             {
                 bMoveCamera = false;
@@ -88,7 +103,7 @@ public class CameraMovement : MonoBehaviour
                     nextLocation = 0;
                 }
             }
-
+           
             if (bMoveCamera)
             {
                 //Moving the camera around
@@ -129,5 +144,12 @@ public class CameraMovement : MonoBehaviour
                 cameraPauseDuration = cameraPauseDurationLevel1;
                 break;
         }
+    }
+
+    void LevelComplete()
+    {
+        bIsPlayerAlive = false;
+        nextLevelMenu.SetActive(true);
+        Debug.Log("You beat the level!!");
     }
 }
