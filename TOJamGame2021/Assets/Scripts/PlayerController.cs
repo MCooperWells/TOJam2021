@@ -21,11 +21,17 @@ public class PlayerController : MonoBehaviour
     public GameObject ingameMenu;
 
     public GameObject cameraObject;
-    
+
+    public Animator animator;
+
     void Start()
     {
         //Get the game manager's level
         SetGameLevel(GameManager.gameLevel);
+
+        animator = GetComponent<Animator>();
+
+        animator.SetBool("IsMoving", false);
 
         ingameMenu.SetActive(false);
 
@@ -38,8 +44,16 @@ public class PlayerController : MonoBehaviour
     {
         //movement input
         Vector3 moveInput = new Vector3(Input.GetAxisRaw("Horizontal"), 0.0f, Input.GetAxisRaw("Vertical"));
-        
 
+        if(Input.GetAxisRaw("Horizontal") != 0.0f || Input.GetAxisRaw("Vertical") != 0.0f)
+        {
+            transform.rotation = Quaternion.LookRotation(moveInput);
+            animator.SetBool("IsMoving", true);
+        }
+        else
+        {
+            animator.SetBool("IsMoving", false);
+        }
         moveVelocity = moveInput.normalized * playerSpeed;
     }
 
