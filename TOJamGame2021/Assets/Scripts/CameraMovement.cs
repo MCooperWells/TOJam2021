@@ -24,6 +24,13 @@ public class CameraMovement : MonoBehaviour
     //Timer
     private float timer = 0.0f;
 
+    //List of all the colliders
+    public Collider topCollider;
+    public Collider bottomCollider;
+    public Collider leftCollider;
+    public Collider rightCollider;
+
+
     //Camera speed and duration. Both affec the speed the camera moves and how long it has to move
     private float cameraSpeed;
     public float cameraSpeedLevel1;
@@ -56,11 +63,11 @@ public class CameraMovement : MonoBehaviour
                 cameraTransformLocations[i].transform.position.x, 
                 this.gameObject.transform.position.y,
                 cameraTransformLocations[i].transform.position.z);
-            Debug.Log("Camera Positions number " + (i+1) + " (" + cameraVectorLocations[i].x + ", " + cameraVectorLocations[i].y + ")");
         }
 
         //Set the location of the camera to be at the first location
         this.gameObject.transform.position = cameraVectorLocations[startingLocation];
+        UpdateKillZone(nextLocation);
 
         bMoveCamera = false;
         bIsPlayerAlive = true;
@@ -70,7 +77,6 @@ public class CameraMovement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        //Debug.Log("Move Camera bool = " + bMoveCamera + " and Timer =" + timer);
         if (bMoveCamera == false)
         {
             timer += Time.deltaTime;
@@ -90,7 +96,6 @@ public class CameraMovement : MonoBehaviour
             {
                 LevelComplete();
                 NumberLaps++;
-                Debug.Log("Number of Laps Completed " + NumberLaps);
             }
 
 
@@ -102,6 +107,7 @@ public class CameraMovement : MonoBehaviour
                 {
                     nextLocation = 0;
                 }
+                UpdateKillZone(nextLocation);
             }
            
             if (bMoveCamera)
@@ -115,6 +121,9 @@ public class CameraMovement : MonoBehaviour
                         cameraVectorLocations[nextLocation].z
                         ),
                     cameraSpeed * Time.deltaTime);
+
+                Debug.Log("Going towards " + nextLocation + " Location");
+
             }
         }
     }
@@ -150,6 +159,49 @@ public class CameraMovement : MonoBehaviour
     {
         bIsPlayerAlive = false;
         nextLevelMenu.SetActive(true);
-        Debug.Log("You beat the level!!");
+    }
+
+    void UpdateKillZone(int newLocation)
+    {
+        switch(newLocation)
+        {
+            //Case 0 means going to the LEFT
+            case 0:
+                leftCollider.enabled = false;
+
+                topCollider.enabled = true;
+                bottomCollider.enabled = true;
+                rightCollider.enabled = true;
+                break;
+
+            //Case 1 means going UP
+            case 1:
+                topCollider.enabled = false;
+
+                bottomCollider.enabled = true;
+                leftCollider.enabled = true;
+                rightCollider.enabled = true;
+                break;
+            //Case 2 means going to the RIGHT
+            case 2:
+                rightCollider.enabled = false;
+
+                topCollider.enabled = true;
+                bottomCollider.enabled = true;
+                leftCollider.enabled = true;
+                break;
+
+            //Case 3 means going DOWN
+            case 3:
+                bottomCollider.enabled = false;
+
+                topCollider.enabled = true;
+                leftCollider.enabled = true;
+                rightCollider.enabled = true;
+                break;
+            default:
+
+                break;
+        }
     }
 }

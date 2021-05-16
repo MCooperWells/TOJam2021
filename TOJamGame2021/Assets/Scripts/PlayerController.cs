@@ -96,7 +96,6 @@ public class PlayerController : MonoBehaviour
         if (collision.gameObject.tag == "KillZone")
         {
             Die();
-            Debug.Log("HIT!");
         }
 
         //Hitting a coin
@@ -104,7 +103,6 @@ public class PlayerController : MonoBehaviour
         {
             soundControllerObject.SendMessage("PlayEffects", coinSFXIndex);
             collision.gameObject.SetActive(false);
-            Debug.Log("Coin Collected");
             GameManager.Singleton.AddToGameScore(1);
         }
 
@@ -112,7 +110,6 @@ public class PlayerController : MonoBehaviour
         if(collision.gameObject.tag == "Spikes")
         {
             Die();
-            Debug.Log("Player killed by spikes!");
         }
     }
 

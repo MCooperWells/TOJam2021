@@ -103,6 +103,10 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   bIsPlayerAlive: 0
+  topCollider: {fileID: 1573931315}
+  bottomCollider: {fileID: 1573931314}
+  leftCollider: {fileID: 1573931313}
+  rightCollider: {fileID: 1573931312}
   cameraSpeedLevel1: 4
   cameraSpeedLevel2: 6
   cameraSpeedLevel3: 7
