@@ -175,4 +175,9 @@ public class PlayerController : MonoBehaviour
             walkingSource.Stop();
         }
     }
+
+    public void IncreaseDifficulty(float speedIncrease)
+    {
+        playerSpeed += speedIncrease;
+    }
 }

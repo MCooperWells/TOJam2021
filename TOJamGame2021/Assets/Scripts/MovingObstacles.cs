@@ -96,4 +96,9 @@ public class MovingObstacles : MonoBehaviour
                 break;
         }
     }
+
+    public void IncreaseDifficulty(float speedIncrease)
+    {
+        speed += speedIncrease;
+    }
 }

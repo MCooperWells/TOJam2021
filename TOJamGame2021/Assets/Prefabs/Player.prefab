@@ -54,8 +54,8 @@ MonoBehaviour:
   ingameMenu: {fileID: 0}
   cameraObject: {fileID: 0}
   songIndexLevel1: 0
-  songIndexLevel2: 0
-  songIndexLevel3: 0
+  songIndexLevel2: 1
+  songIndexLevel3: 2
   coinSFXIndex: 0
   deathSFXIndex: 1
   deathParticleSystem: {fileID: 1280141305896002, guid: e473029e4c70ad543a6879b82a732f4f, type: 3}
@@ -119,7 +119,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 8300000, guid: 7208d73b52f002e44b9df18571348d8e, type: 3}
   m_PlayOnAwake: 0
-  m_Volume: 0.25
+  m_Volume: 0.15
   m_Pitch: 1
   Loop: 1
   Mute: 0

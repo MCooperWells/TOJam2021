@@ -53,11 +53,18 @@ public class CameraMovement : MonoBehaviour
     public GameObject nextLevelMenu;
     public GameObject restartQuitMenu;
 
+    public GameObject endlessMode;
+    public float cameraIncreaseSpeed;
+
+    private int gameLevel;
+
     // Start is called before the first frame update
     void Start()
     {
+
+        gameLevel = GameManager.gameLevel;
         //Before anything else, set the game level
-        SetGameLevel(GameManager.gameLevel);
+        SetGameLevel(gameLevel);
 
         //Set the camera vector2 array to be as long as the transform location arrya
         cameraVectorLocations = new Vector3[cameraTransformLocations.Length];
@@ -78,6 +85,7 @@ public class CameraMovement : MonoBehaviour
         bMoveCamera = false;
         bIsPlayerAlive = true;
         nextLevelMenu.SetActive(false);
+        endlessMode.SetActive(false);
     }
 
     // Update is called once per frame
@@ -175,8 +183,22 @@ public class CameraMovement : MonoBehaviour
 
     void LevelComplete()
     {
-        bIsPlayerAlive = false;
-        nextLevelMenu.SetActive(true);
+        if(gameLevel != 3)
+        {
+            bIsPlayerAlive = false;
+            nextLevelMenu.SetActive(true);
+        }
+        else if(gameLevel == 3)
+        {
+            endlessMode.SetActive(true);
+
+            EndlessMode mode = endlessMode.GetComponent<EndlessMode>();
+            mode.IncreaseDifficulty();
+            IncreaseDifficulty(cameraIncreaseSpeed);
+
+            cameraPauseDuration = 0.0f;
+            Debug.Log("BEGIN ENDLESS MODE");
+        }
     }
 
     void UpdateKillZone(int newLocation)
@@ -241,5 +263,9 @@ public class CameraMovement : MonoBehaviour
 
                 break;
         }
+    }
+    public void IncreaseDifficulty(float speedIncrease)
+    {
+        cameraSpeed += speedIncrease;
     }
 }
