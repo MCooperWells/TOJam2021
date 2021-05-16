@@ -11,13 +11,6 @@ public class PlayerController : MonoBehaviour
     public float playerSpeedlevel2;
     public float playerSpeedlevel3;
 
-    //Music indices
-    private float songIndex;
-
-    public float songIndexLevel1;
-    public float songIndexLevel2;
-    public float songIndexLevel3;
-
     //Rigidbody used for adding movement
     private Rigidbody rigidBody;
 
@@ -35,6 +28,19 @@ public class PlayerController : MonoBehaviour
     //Sounds
     private GameObject soundControllerObject;
 
+    private AudioSource walkingSource;
+
+    //Music indices
+    private int songIndex;
+
+    public int songIndexLevel1;
+    public int songIndexLevel2;
+    public int songIndexLevel3;
+
+    //SFX indices
+    public int coinSFXIndex;
+    public int deathSFXIndex;
+
     void Start()
     {
         //Get the game manager's level
@@ -42,6 +48,8 @@ public class PlayerController : MonoBehaviour
 
         //Get the rigidbody
         rigidBody = GetComponent<Rigidbody>();
+
+        walkingSource = GetComponent<AudioSource>();
 
         //Setup the music
         soundControllerObject = GameObject.Find("SoundController");
@@ -66,10 +74,12 @@ public class PlayerController : MonoBehaviour
         {
             transform.rotation = Quaternion.LookRotation(moveInput);
             animator.SetBool("IsMoving", true);
+            StartWalkingSFX(true, 0);
         }
         else
         {
             animator.SetBool("IsMoving", false);
+            StartWalkingSFX(false, 0);
         }
         moveVelocity = moveInput.normalized * playerSpeed;
     }
@@ -92,6 +102,7 @@ public class PlayerController : MonoBehaviour
         //Hitting a coin
         if(collision.gameObject.tag == "Coin")
         {
+            soundControllerObject.SendMessage("PlayEffects", coinSFXIndex);
             collision.gameObject.SetActive(false);
             Debug.Log("Coin Collected");
             GameManager.Singleton.AddToGameScore(1);
@@ -137,6 +148,20 @@ public class PlayerController : MonoBehaviour
             default:
                 playerSpeed = playerSpeedlevel1;
                 break;
+        }
+    }
+
+    private void StartWalkingSFX(bool ShouldPlay, int speed)
+    {
+        //If the walking audio is not playing and it should be playing, then start it playing
+        if(!walkingSource.isPlaying && ShouldPlay)
+        {
+            walkingSource.Play();
+        }
+
+        else if (walkingSource.isPlaying && !ShouldPlay)
+        {
+            walkingSource.Stop();
         }
     }
 }
