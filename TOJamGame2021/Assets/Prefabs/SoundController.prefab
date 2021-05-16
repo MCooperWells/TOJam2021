@@ -47,6 +47,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   musicSFX:
   - {fileID: 8300000, guid: 95e6d89994b01344aad0764f3bbd8a9c, type: 3}
+  - {fileID: 8300000, guid: 95e6d89994b01344aad0764f3bbd8a9c, type: 3}
+  - {fileID: 8300000, guid: 95e6d89994b01344aad0764f3bbd8a9c, type: 3}
   effectsSFX:
   - {fileID: 8300000, guid: b1281f7ab615ce746981fdf652dce026, type: 3}
   - {fileID: 8300000, guid: e9d860971bae9d441973a331109b704e, type: 3}

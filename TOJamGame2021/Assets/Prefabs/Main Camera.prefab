@@ -249,7 +249,7 @@ MonoBehaviour:
   nextLevelMenu: {fileID: 0}
   restartQuitMenu: {fileID: 0}
   endlessMode: {fileID: 0}
-  cameraIncreaseSpeed: 0.15
+  cameraIncreaseSpeed: 1
 --- !u!114 &326469837
 MonoBehaviour:
   m_ObjectHideFlags: 0

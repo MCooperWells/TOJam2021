@@ -11,10 +11,17 @@ public class EndlessMode : MonoBehaviour
     public float playerSpeedIncrease;
     public float obstacleSpeedIncrease;
 
+    public GameObject onceMoreText;
+
     // Start is called before the first frame update
     void Start()
     {
         
+    }
+
+    private void OnEnable()
+    {
+        onceMoreText.SetActive(true);
     }
 
     // Update is called once per frame
@@ -39,5 +46,9 @@ public class EndlessMode : MonoBehaviour
             MovingObstacles mo = obstacleReferences[i].GetComponent<MovingObstacles>();
             mo.IncreaseDifficulty(obstacleSpeedIncrease);
         }
+
+        onceMoreText.SetActive(true);
+
+        Debug.Log("ENDLESS MODE START START");
     }
 }
