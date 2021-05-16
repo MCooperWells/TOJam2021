@@ -99,6 +99,6 @@ public class MovingObstacles : MonoBehaviour
 
     public void IncreaseDifficulty(float speedIncrease)
     {
-        speed += speedIncrease;
+        speed *= speedIncrease;
     }
 }

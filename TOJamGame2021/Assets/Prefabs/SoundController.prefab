@@ -46,9 +46,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   musicSFX:
-  - {fileID: 8300000, guid: 95e6d89994b01344aad0764f3bbd8a9c, type: 3}
-  - {fileID: 8300000, guid: 95e6d89994b01344aad0764f3bbd8a9c, type: 3}
-  - {fileID: 8300000, guid: 95e6d89994b01344aad0764f3bbd8a9c, type: 3}
+  - {fileID: 8300000, guid: 78a88f1bbdda5f14e9a1f640f70fd7b5, type: 3}
+  - {fileID: 8300000, guid: 574cb39dbccda78408dfe53fb30f03d8, type: 3}
+  - {fileID: 8300000, guid: 439f5dc8e105c0948909cdf77809fc7b, type: 3}
   effectsSFX:
   - {fileID: 8300000, guid: b1281f7ab615ce746981fdf652dce026, type: 3}
   - {fileID: 8300000, guid: e9d860971bae9d441973a331109b704e, type: 3}
@@ -68,7 +68,7 @@ AudioSource:
   m_PlayOnAwake: 1
   m_Volume: 0.75
   m_Pitch: 1
-  Loop: 0
+  Loop: 1
   Mute: 0
   Spatialize: 0
   SpatializePostEffects: 0

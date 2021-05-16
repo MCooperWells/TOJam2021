@@ -67,7 +67,7 @@ public class SplashScreenManager : MonoBehaviour
         }
         else if(timer > 6f)
         {
-            colour.a -= radeRate * 2;
+            colour.a -= radeRate * 20;
             blackScreen.color = colour;
 
             if(backgroundNameImage.activeSelf == false)
@@ -78,12 +78,12 @@ public class SplashScreenManager : MonoBehaviour
         }
         else if(timer > 3f)
         {
-            colour.a += radeRate;
+            colour.a += radeRate * 10;
             blackScreen.color = colour;
         }   
         else if (timer > 0f)
         {
-            colour.a -= radeRate;
+            colour.a -= radeRate * 10;
             blackScreen.color = colour;
         }
     }
