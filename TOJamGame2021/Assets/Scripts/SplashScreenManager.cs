@@ -14,6 +14,7 @@ public class SplashScreenManager : MonoBehaviour
 
     //Images to be displayed
     public GameObject TOJamOfficialImage;
+    public GameObject backgroundNameImage;
     public GameObject gameNameImage;
 
     //Fade rate
@@ -41,8 +42,9 @@ public class SplashScreenManager : MonoBehaviour
         blackScreen.color = colour;
         
         //Show the TOJam first  
-        ShowGameNameImage(false);
+        ShowGameBackgroundImage(false);
         ShowTOJamOfficial(true);
+        ShowGameNameImage(false);
 
         //Setup the music
         soundControllerObject = GameObject.Find("SoundController");
@@ -58,20 +60,19 @@ public class SplashScreenManager : MonoBehaviour
         if(timer > 12f)
         {
             SceneManager.LoadScene(mainMenu);
-        }    
-        else if(timer > 9f)
+        }
+        else if(timer > 7f)
         {
-            colour.a += radeRate;
-            blackScreen.color = colour;
+            ShowGameNameImage(true);
         }
         else if(timer > 6f)
         {
-            colour.a -= radeRate;
+            colour.a -= radeRate * 2;
             blackScreen.color = colour;
 
-            if(gameNameImage.activeSelf == false)
+            if(backgroundNameImage.activeSelf == false)
             {
-                ShowGameNameImage(true);
+                ShowGameBackgroundImage(true);
                 ShowTOJamOfficial(false);
             }
         }
@@ -88,12 +89,16 @@ public class SplashScreenManager : MonoBehaviour
     }
 
 
-    void ShowGameNameImage(bool show)
+    void ShowGameBackgroundImage(bool show)
     {
-        gameNameImage.SetActive(show);
+        backgroundNameImage.SetActive(show);
     }
     void ShowTOJamOfficial(bool show)
     {
         TOJamOfficialImage.SetActive(show);
+    }
+    void ShowGameNameImage(bool show)
+    {
+        gameNameImage.SetActive(show);
     }
 }
