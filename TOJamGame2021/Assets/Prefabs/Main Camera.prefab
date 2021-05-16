@@ -105,8 +105,8 @@ MonoBehaviour:
   bIsPlayerAlive: 0
   cameraSpeedLevel1: 4
   cameraSpeedLevel2: 6
-  cameraSpeedLevel3: 8
-  cameraPauseDurationLevel1: 2
+  cameraSpeedLevel3: 7
+  cameraPauseDurationLevel1: 1.5
   cameraPauseDurationLevel2: 1
   cameraPauseDurationLevel3: 0.5
   nextLevelMenu: {fileID: 0}
