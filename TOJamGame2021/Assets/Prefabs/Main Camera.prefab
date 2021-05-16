@@ -227,10 +227,10 @@ MonoBehaviour:
   bottomCollider: {fileID: 1573931314}
   leftCollider: {fileID: 1573931313}
   rightCollider: {fileID: 1573931312}
-  topKillZoneVFX: {fileID: 0}
-  bottomKillZoneVFX: {fileID: 0}
-  leftKillZoneVFX: {fileID: 0}
-  rightKillZoneVFX: {fileID: 0}
+  topKillZoneVFX: {fileID: 1552171369}
+  bottomKillZoneVFX: {fileID: 1565809263}
+  leftKillZoneVFX: {fileID: 127535921}
+  rightKillZoneVFX: {fileID: 2003994544}
   cameraSpeedLevel1: 4
   cameraSpeedLevel2: 6
   cameraSpeedLevel3: 7
