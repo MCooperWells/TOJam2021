@@ -24113,6 +24113,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 844934825}
     - target: {fileID: 6915312018125042912, guid: 835153d23c9305340be11f0ae9c91e03, type: 3}
+      propertyPath: restartQuitMenu
+      value: 
+      objectReference: {fileID: 151250578}
+    - target: {fileID: 6915312018125042912, guid: 835153d23c9305340be11f0ae9c91e03, type: 3}
       propertyPath: cameraTransformLocations.Array.data[0]
       value: 
       objectReference: {fileID: 1026954032}

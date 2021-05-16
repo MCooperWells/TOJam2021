@@ -30,6 +30,11 @@ public class CameraMovement : MonoBehaviour
     public Collider leftCollider;
     public Collider rightCollider;
 
+    //VFX for each side of the killzone
+    public GameObject topKillZoneVFX;
+    public GameObject bottomKillZoneVFX;
+    public GameObject leftKillZoneVFX;
+    public GameObject rightKillZoneVFX;
 
     //Camera speed and duration. Both affec the speed the camera moves and how long it has to move
     private float cameraSpeed;
@@ -46,6 +51,7 @@ public class CameraMovement : MonoBehaviour
 
     // Start is called before the first frame update
     public GameObject nextLevelMenu;
+    public GameObject restartQuitMenu;
 
     // Start is called before the first frame update
     void Start()
@@ -80,10 +86,22 @@ public class CameraMovement : MonoBehaviour
         if (bMoveCamera == false)
         {
             timer += Time.deltaTime;
-            if(timer > cameraPauseDuration)
+            if (timer > cameraPauseDuration)
             {
                 bMoveCamera = true;
                 timer = 0f;
+            }
+        }
+
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            if (nextLevelMenu.activeSelf)
+            {
+                GameManager.Singleton.NextLevel();
+            }
+            else if (restartQuitMenu.activeSelf)
+            {
+                GameManager.Singleton.RestartLevel();
             }
         }
     }
@@ -168,36 +186,56 @@ public class CameraMovement : MonoBehaviour
             //Case 0 means going to the LEFT
             case 0:
                 leftCollider.enabled = false;
+                leftKillZoneVFX.SetActive(false);
 
                 topCollider.enabled = true;
                 bottomCollider.enabled = true;
                 rightCollider.enabled = true;
+
+                topKillZoneVFX.SetActive(true);
+                bottomKillZoneVFX.SetActive(true);
+                rightKillZoneVFX.SetActive(true);
                 break;
 
             //Case 1 means going UP
             case 1:
                 topCollider.enabled = false;
+                topKillZoneVFX.SetActive(false);
 
                 bottomCollider.enabled = true;
                 leftCollider.enabled = true;
                 rightCollider.enabled = true;
+
+                bottomKillZoneVFX.SetActive(true);
+                leftKillZoneVFX.SetActive(true);
+                rightKillZoneVFX.SetActive(true);
                 break;
             //Case 2 means going to the RIGHT
             case 2:
                 rightCollider.enabled = false;
+                rightKillZoneVFX.SetActive(false);
 
                 topCollider.enabled = true;
                 bottomCollider.enabled = true;
                 leftCollider.enabled = true;
+
+                topKillZoneVFX.SetActive(true);
+                bottomKillZoneVFX.SetActive(true);
+                leftKillZoneVFX.SetActive(true);
                 break;
 
             //Case 3 means going DOWN
             case 3:
                 bottomCollider.enabled = false;
+                bottomKillZoneVFX.SetActive(false);
 
                 topCollider.enabled = true;
                 leftCollider.enabled = true;
                 rightCollider.enabled = true;
+
+                topKillZoneVFX.SetActive(true);
+                leftKillZoneVFX.SetActive(true);
+                rightKillZoneVFX.SetActive(true);
                 break;
             default:
 

@@ -41,6 +41,9 @@ public class PlayerController : MonoBehaviour
     public int coinSFXIndex;
     public int deathSFXIndex;
 
+    //Death particle systems
+    public GameObject deathParticleSystem;
+
     void Start()
     {
         //Get the game manager's level
@@ -116,9 +119,20 @@ public class PlayerController : MonoBehaviour
     //When the player dies, what happens
     void Die()
     {
+        //Add a particle system for the players death
+        GameObject particle = Instantiate(deathParticleSystem, this.gameObject.transform.position, Quaternion.identity);
+        particle.GetComponent<ParticleSystem>().Play();
+
+        //Turn on the menu
         ingameMenu.SetActive(true);
+        //Turn off camera movement
         CameraMovement cam = cameraObject.GetComponent<CameraMovement>();
         cam.bIsPlayerAlive = false;
+
+        //Add some sound effects
+        soundControllerObject.SendMessage("PlayEffects", deathSFXIndex);
+
+        //Character dead
         this.gameObject.SetActive(false);
     }
 
