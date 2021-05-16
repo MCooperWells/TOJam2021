@@ -11,6 +11,13 @@ public class PlayerController : MonoBehaviour
     public float playerSpeedlevel2;
     public float playerSpeedlevel3;
 
+    //Music indices
+    private float songIndex;
+
+    public float songIndexLevel1;
+    public float songIndexLevel2;
+    public float songIndexLevel3;
+
     //Rigidbody used for adding movement
     private Rigidbody rigidBody;
 
@@ -22,21 +29,31 @@ public class PlayerController : MonoBehaviour
 
     public GameObject cameraObject;
 
-    public Animator animator;
+    //Animations
+    private Animator animator;
+
+    //Sounds
+    private GameObject soundControllerObject;
 
     void Start()
     {
         //Get the game manager's level
         SetGameLevel(GameManager.gameLevel);
 
-        animator = GetComponent<Animator>();
-
-        animator.SetBool("IsMoving", false);
-
-        ingameMenu.SetActive(false);
-
         //Get the rigidbody
         rigidBody = GetComponent<Rigidbody>();
+
+        //Setup the music
+        soundControllerObject = GameObject.Find("SoundController");
+        soundControllerObject.SendMessage("PlayMusic", songIndex);
+
+        //Grab the animator and start idle animations
+        animator = GetComponent<Animator>();
+        animator.SetBool("IsMoving", false);
+
+        //Hide the menu
+        ingameMenu.SetActive(false);
+
     }
 
     // Update is called once per frame
@@ -104,14 +121,17 @@ public class PlayerController : MonoBehaviour
         {
             case 1:
                 playerSpeed = playerSpeedlevel1;
+                songIndex = songIndexLevel1;
 
                 break;
             case 2:
                 playerSpeed = playerSpeedlevel2;
+                songIndex = songIndexLevel2;
 
                 break;
             case 3:
                 playerSpeed = playerSpeedlevel3;
+                songIndex = songIndexLevel3;
 
                 break;
             default:
