@@ -25,6 +25,13 @@ public class SplashScreenManager : MonoBehaviour
     //Name of the main menu level to be loaded
     public string mainMenu;
 
+
+    //Sounds
+    private GameObject soundControllerObject;
+
+    //Song index to play at the menu
+    public int songIndex;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -36,6 +43,10 @@ public class SplashScreenManager : MonoBehaviour
         //Show the TOJam first  
         ShowGameNameImage(false);
         ShowTOJamOfficial(true);
+
+        //Setup the music
+        soundControllerObject = GameObject.Find("SoundController");
+        soundControllerObject.SendMessage("PlayMusic", songIndex);
     }
 
     // Update is called once per frame
