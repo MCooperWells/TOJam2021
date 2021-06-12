@@ -5,7 +5,6 @@ using UnityEngine;
 public class BatteryScript : MoveablePawnScript
 {
     //Battery Parameters
-    public GameObject player;
     private GameboyScript playerScript;
     private Light poweringLight;
 
@@ -21,11 +20,6 @@ public class BatteryScript : MoveablePawnScript
         //base start
         base.Start();
 
-
-
-        GameObject.FindGameObjectsWithTag("Respawn");
-
-
         //Setup batteryscript references
         if (this.gameObject.tag != "Battery1")
             otherBatteryRef = GameObject.FindGameObjectWithTag("Battery1").GetComponent<BatteryScript>();
@@ -33,7 +27,7 @@ public class BatteryScript : MoveablePawnScript
             otherBatteryRef = GameObject.FindGameObjectWithTag("Battery2").GetComponent<BatteryScript>();
 
         //Get the player script
-        playerScript = player.GetComponent<GameboyScript>();
+        playerScript = GameObject.FindGameObjectWithTag("Player").GetComponent<GameboyScript>();
 
         //set the charging light to zero
         poweringLight = GetComponent<Light>();
@@ -49,7 +43,7 @@ public class BatteryScript : MoveablePawnScript
         //If the charging station can't move, stop it from moving
         if (!bCanMove)
         {
-            OutOfEnergy();
+            UpdateGameboyPower(false);
         }
     }
 
@@ -89,7 +83,15 @@ public class BatteryScript : MoveablePawnScript
             //Leaving the charging station
             Debug.Log("Exiting Charging station");
             bAtChargingStation = false;
-            StartCharging(false);
+
+            if(otherBatteryClose && otherBatteryRef.bAtChargingStation)
+            {
+                
+            }
+            else
+            {
+                StartCharging(false);
+            }
 
             //Check if there are other batteries nearby
             PowerOtherBatteries(false);
@@ -113,6 +115,7 @@ public class BatteryScript : MoveablePawnScript
             if(otherBatteryClose && otherBatteryRef.bAtChargingStation)
             {
                 StartCharging(true);
+                UpdateGameboyPower(true);
             }
             else if(otherBatteryClose && !otherBatteryRef.bAtChargingStation)
             {
@@ -136,14 +139,16 @@ public class BatteryScript : MoveablePawnScript
         }
     }
 
-    public void OutOfEnergy()
+    public void UpdateGameboyPower(bool hasPower)
     {
-        playerScript.NoBatteryPower(this.gameObject.tag);
+        playerScript.UpdateBatteryPower(this.gameObject.tag, hasPower);
     }
 
     private void StartCharging(bool charging)
     {
         energyDecayRate = charging ? energyRechargeRate : energyDrainRate;
         poweringLight.intensity = charging ? 30 : 0;
+        if (charging)
+            bCanMove = true;
     }
 }

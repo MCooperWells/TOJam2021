@@ -9,10 +9,10 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5716175614205283557}
+  - component: {fileID: 5716175614205283552}
   - component: {fileID: 5716175614205283554}
   - component: {fileID: 5716175614205283553}
   - component: {fileID: 5716175614205283566}
-  - component: {fileID: 5716175614205283552}
   - component: {fileID: 5716175614205283555}
   - component: {fileID: 5716175614205283556}
   m_Layer: 0
@@ -36,6 +36,20 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &5716175614205283552
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5716175614205283567}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fea4981e0e04f3741a2fe66b686e5b2d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  energyRechargeRate: 0.05
+  energyDrainRate: -0.05
 --- !u!54 &5716175614205283554
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -101,23 +115,6 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5716175614205283567}
   m_Mesh: {fileID: 10208, guid: 0000000000000000e000000000000000, type: 0}
---- !u!114 &5716175614205283552
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5716175614205283567}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fea4981e0e04f3741a2fe66b686e5b2d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  energyAmount: 1
-  energyRechargeRate: 0.05
-  energyDrainRate: -0.05
-  bCanMove: 1
-  player: {fileID: 0}
 --- !u!135 &5716175614205283555
 SphereCollider:
   m_ObjectHideFlags: 0

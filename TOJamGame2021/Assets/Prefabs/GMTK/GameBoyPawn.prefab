@@ -9,11 +9,11 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4750599378322868597}
+  - component: {fileID: 4750599378322868554}
   - component: {fileID: 4750599378322868596}
   - component: {fileID: 4750599378322868599}
   - component: {fileID: 4750599378322868598}
   - component: {fileID: 4750599378322868593}
-  - component: {fileID: 4750599378322868554}
   - component: {fileID: 4750599378322868555}
   m_Layer: 0
   m_Name: GameBoyPawn
@@ -36,6 +36,20 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &4750599378322868554
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4750599378322868592}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 92c4d4c15a516b04ca6967044d462c5e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  energyRechargeRate: 0.05
+  energyDrainRate: -0.05
 --- !u!54 &4750599378322868596
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -114,25 +128,6 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4750599378322868592}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
---- !u!114 &4750599378322868554
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4750599378322868592}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 92c4d4c15a516b04ca6967044d462c5e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  energyAmount: 1
-  energyRechargeRate: 0.05
-  energyDrainRate: -0.05
-  bCanMove: 1
-  batteryRef1: {fileID: 0}
-  batteryRef2: {fileID: 0}
-  batteryRef3: {fileID: 0}
 --- !u!108 &4750599378322868555
 Light:
   m_ObjectHideFlags: 0

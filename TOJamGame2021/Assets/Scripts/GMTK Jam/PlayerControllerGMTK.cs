@@ -6,34 +6,51 @@ public class PlayerControllerGMTK : MonoBehaviour
 {
     //Public player speed, determines how fast the player moves
     public float playerSpeed;
+    public float batterySpeed;
 
+    //Public camera
+    private GameObject mainCamera;
+
+    //Can the player move?
     private bool playerCanMove;
 
     //The move velocity of the player as determine by the input
     private Vector3 moveVelocity;
 
-    //array of players
-    public GameObject[] playerPawns;
+    //array of players and their moveable scripts
+    private GameObject[] playerPawns;
     private MoveablePawnScript[] playerPawnScripts;
-    public Camera mainCamera;
 
     //RB component
     private Rigidbody rigidBody;
 
+    //Number of players
     private int activePlayer = 0;
+    private int numberOfPawns = 3;
 
     // Start is called before the first frame update
     void Start()
     {
-        mainCamera.GetComponent<CameraController>().UpdateCamera(playerPawns[activePlayer]);
-        rigidBody = playerPawns[activePlayer].GetComponent<Rigidbody>();
+        mainCamera = GameObject.FindGameObjectWithTag("CameraRoot");
 
-        playerPawnScripts = new MoveablePawnScript[playerPawns.Length];
+        //Set up the player pawn and scripts
+        playerPawns = new GameObject[numberOfPawns];
+        playerPawnScripts = new MoveablePawnScript[numberOfPawns];
 
+        //Get the player and batteries
+        playerPawns[0] = GameObject.FindGameObjectWithTag("Player");
+        playerPawns[1] = GameObject.FindGameObjectWithTag("Battery1");
+        playerPawns[2] = GameObject.FindGameObjectWithTag("Battery2");
+
+        //Loop through the pawns and link their scripts
         for (int i = 0; i < playerPawns.Length; i++)
         {
             playerPawnScripts[i] = playerPawns[i].GetComponent<MoveablePawnScript>();
         }
+
+        //Setup the camera and rigid bodies
+        mainCamera.GetComponent<CameraController>().UpdateCamera(playerPawns[activePlayer]);
+        rigidBody = playerPawns[activePlayer].GetComponent<Rigidbody>();
     }
 
     // Update is called once per frame
@@ -56,7 +73,16 @@ public class PlayerControllerGMTK : MonoBehaviour
             //animator.SetBool("IsMoving", false);
             //StartWalkingSFX(false, 0);
         }
-        moveVelocity = moveInput.normalized * playerSpeed;
+
+        if(activePlayer == 0)
+        {
+            moveVelocity = moveInput.normalized * playerSpeed;
+        }
+        else
+        {
+            moveVelocity = moveInput.normalized * batterySpeed;
+        }
+        
 
         //Changing Characters:
         if (Input.GetKeyUp(KeyCode.Alpha1))

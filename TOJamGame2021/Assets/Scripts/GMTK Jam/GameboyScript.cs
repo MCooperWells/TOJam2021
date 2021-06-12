@@ -2,9 +2,6 @@ using UnityEngine;
 
 public class GameboyScript : MoveablePawnScript
 {
-    public GameObject batteryRef1;
-    public GameObject batteryRef2;
-
     private BatteryScript batteryScriptRef1;
     private BatteryScript batteryScriptRef2;
 
@@ -17,8 +14,8 @@ public class GameboyScript : MoveablePawnScript
     void Start()
     {
         base.Start();
-        batteryScriptRef1 = batteryRef1.GetComponent<BatteryScript>();
-        batteryScriptRef2 = batteryRef2.GetComponent<BatteryScript>();
+        batteryScriptRef1 = GameObject.FindGameObjectWithTag("Battery1").GetComponent<BatteryScript>();
+        batteryScriptRef2 = GameObject.FindGameObjectWithTag("Battery2").GetComponent<BatteryScript>();
 
         chargingLight = GetComponent<Light>();
         chargingLight.intensity = 0f;
@@ -48,9 +45,23 @@ public class GameboyScript : MoveablePawnScript
         }
     }
 
-    public void NoBatteryPower(string tag)
+    public void UpdateBatteryPower(string tag, bool hasPower)
     {
-        CheckCurrentBatteries(tag, false);
+        CheckPower();
+    }
+
+    private void CheckPower()
+    {
+        if (battery1Close && batteryScriptRef1.CanMove() || battery2Close && batteryScriptRef2.CanMove())
+        {
+            energyDecayRate = energyRechargeRate;
+            chargingLight.intensity = 30;
+        }
+        else
+        {
+            energyDecayRate = energyDrainRate;
+            chargingLight.intensity = 0;
+        }
     }
 
     private void CheckCurrentBatteries(string tag, bool entering)
@@ -68,17 +79,6 @@ public class GameboyScript : MoveablePawnScript
             default:
                 break;
         }
-
-        if (battery1Close && batteryScriptRef1.bCanMove || battery2Close && batteryScriptRef2.bCanMove)
-        {
-            energyDecayRate = energyRechargeRate;
-            chargingLight.intensity = 30;
-        }
-        else
-        {
-            energyDecayRate = energyDrainRate;
-            chargingLight.intensity = 0;
-        }
-
+        CheckPower();
     }
 }

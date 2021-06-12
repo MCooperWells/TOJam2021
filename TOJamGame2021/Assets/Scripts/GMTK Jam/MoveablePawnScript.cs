@@ -4,13 +4,13 @@ using UnityEngine;
 
 public class MoveablePawnScript : MonoBehaviour
 {
-    public float energyAmount = 1.0f;
+    private float energyAmount = 1.0f;
     protected float energyDecayRate = -0.01f;
 
     public float energyRechargeRate = 0.03f;
     public float energyDrainRate = -0.01f;
 
-    public bool bCanMove = true;
+    protected bool bCanMove = true;
 
     protected void Start()
     {
@@ -35,7 +35,7 @@ public class MoveablePawnScript : MonoBehaviour
         }
 
         //Based on the energy amount, either allow the object to move or stop it
-        if (energyAmount < 0.01f)
+        if (energyAmount == 0.0f)
         {
             bCanMove = false;
         }
@@ -48,5 +48,10 @@ public class MoveablePawnScript : MonoBehaviour
     public bool CanMove()
     {
         return bCanMove;
+    }
+
+    public float GetEenergyAmount()
+    {
+        return energyAmount;
     }
 }
