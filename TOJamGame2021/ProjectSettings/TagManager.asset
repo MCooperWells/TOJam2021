@@ -10,6 +10,9 @@ TagManager:
   - FxTemporaire
   - Battery
   - ChargingStation
+  - Battery1
+  - Battery2
+  - Battery3
   layers:
   - Default
   - TransparentFX
