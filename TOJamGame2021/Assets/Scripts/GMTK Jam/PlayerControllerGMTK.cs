@@ -56,8 +56,13 @@ public class PlayerControllerGMTK : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        //movement input
-        Vector3 moveInput = new Vector3(Input.GetAxisRaw("Horizontal"), 0.0f, Input.GetAxisRaw("Vertical"));
+        if (Input.GetKeyUp(KeyCode.Space))
+        {
+            SpacebarPress();
+        }
+
+            //movement input
+            Vector3 moveInput = new Vector3(Input.GetAxisRaw("Horizontal"), 0.0f, Input.GetAxisRaw("Vertical"));
 
         //Get if the current player can move
         playerCanMove = playerPawnScripts[activePlayer].CanMove();
@@ -113,5 +118,10 @@ public class PlayerControllerGMTK : MonoBehaviour
             rigidBody.MovePosition(rigidBody.position + moveVelocity * Time.deltaTime);
         }
         
+    }
+
+    protected void SpacebarPress()
+    {
+        playerPawnScripts[activePlayer].SpacebarActionEvent();
     }
 }

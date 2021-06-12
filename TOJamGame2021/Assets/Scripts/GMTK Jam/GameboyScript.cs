@@ -8,7 +8,10 @@ public class GameboyScript : MoveablePawnScript
     private bool battery1Close = false;
     private bool battery2Close = false;
 
-    private Light chargingLight;
+    private Light screenLight;
+    private bool bScreenLightOn;
+
+    public float screenDrainAmount = -0.03f;
 
     // Start is called before the first frame update
     void Start()
@@ -17,8 +20,8 @@ public class GameboyScript : MoveablePawnScript
         batteryScriptRef1 = GameObject.FindGameObjectWithTag("Battery1").GetComponent<BatteryScript>();
         batteryScriptRef2 = GameObject.FindGameObjectWithTag("Battery2").GetComponent<BatteryScript>();
 
-        chargingLight = GetComponent<Light>();
-        chargingLight.intensity = 0f;
+        screenLight = GetComponent<Light>();
+        screenLight.intensity = bScreenLightOn ? 30f : 0f;
     }
 
     // Update is called once per frame
@@ -58,20 +61,17 @@ public class GameboyScript : MoveablePawnScript
             if(battery1Close && batteryScriptRef1.CanMove())
             {
                 energyDecayRate = energyRechargeRate;
-                chargingLight.intensity = 30;
                 batteryScriptRef1.SetEnergyDrainRate(1);
             }
             if (battery2Close && batteryScriptRef2.CanMove())
             {
                 energyDecayRate = energyRechargeRate;
-                chargingLight.intensity = 30;
                 batteryScriptRef2.SetEnergyDrainRate(1);
             }
         }
         else
         {
             energyDecayRate = energyDrainRate;
-            chargingLight.intensity = 0;
         }
     }
 
@@ -100,5 +100,12 @@ public class GameboyScript : MoveablePawnScript
                 break;
         }
         CheckPower();
+    }
+
+    override public void SpacebarActionEvent()
+    {
+        bScreenLightOn = !bScreenLightOn;
+        screenLight.intensity = bScreenLightOn ? 30f : 0f;
+        energyDecayRate += bScreenLightOn ? screenDrainAmount : -screenDrainAmount;   
     }
 }

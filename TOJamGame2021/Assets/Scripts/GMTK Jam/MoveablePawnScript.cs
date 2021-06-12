@@ -10,6 +10,8 @@ public class MoveablePawnScript : MonoBehaviour
     public float energyRechargeRate = 0.03f;
     public float energyDrainRate = -0.01f;
 
+    protected float increaseDecayRate = 1f;
+
     protected bool bCanMove = true;
 
     protected void Start()
@@ -57,5 +59,10 @@ public class MoveablePawnScript : MonoBehaviour
         {
             energyAmount = 0.0f;
         }
+    }
+
+    virtual public void SpacebarActionEvent()
+    {
+
     }
 }
