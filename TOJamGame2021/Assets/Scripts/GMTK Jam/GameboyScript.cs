@@ -4,15 +4,12 @@ public class GameboyScript : MoveablePawnScript
 {
     public GameObject batteryRef1;
     public GameObject batteryRef2;
-    public GameObject batteryRef3;
 
     private BatteryScript batteryScriptRef1;
     private BatteryScript batteryScriptRef2;
-    private BatteryScript batteryScriptRef3;
 
     private bool battery1Close = false;
     private bool battery2Close = false;
-    private bool battery3Close = false;
 
     private Light chargingLight;
 
@@ -22,7 +19,6 @@ public class GameboyScript : MoveablePawnScript
         base.Start();
         batteryScriptRef1 = batteryRef1.GetComponent<BatteryScript>();
         batteryScriptRef2 = batteryRef2.GetComponent<BatteryScript>();
-        batteryScriptRef3 = batteryRef3.GetComponent<BatteryScript>();
 
         chargingLight = GetComponent<Light>();
         chargingLight.intensity = 0f;
@@ -36,7 +32,7 @@ public class GameboyScript : MoveablePawnScript
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.tag == "Battery1" || other.gameObject.tag == "Battery2" || other.gameObject.tag == "Battery3")
+        if (other.gameObject.tag == "Battery1" || other.gameObject.tag == "Battery2")
         {
             //Debug.Log("Entering battery space");
             CheckCurrentBatteries(other.gameObject.tag, true);
@@ -45,7 +41,7 @@ public class GameboyScript : MoveablePawnScript
 
     private void OnTriggerExit(Collider other)
     {
-        if (other.gameObject.tag == "Battery1" || other.gameObject.tag == "Battery2" || other.gameObject.tag == "Battery3")
+        if (other.gameObject.tag == "Battery1" || other.gameObject.tag == "Battery2")
         {
             //Debug.Log("Exiting battery space");
             CheckCurrentBatteries(other.gameObject.tag, false);
@@ -69,15 +65,11 @@ public class GameboyScript : MoveablePawnScript
                 battery2Close = entering;
                 break;
 
-            case "Battery3":
-                battery3Close = entering;
-                break;
-
             default:
                 break;
         }
 
-        if (battery1Close && batteryScriptRef1.bCanMove || battery2Close && batteryScriptRef2.bCanMove || battery3Close && batteryScriptRef3.bCanMove)
+        if (battery1Close && batteryScriptRef1.bCanMove || battery2Close && batteryScriptRef2.bCanMove)
         {
             energyDecayRate = energyRechargeRate;
             chargingLight.intensity = 30;

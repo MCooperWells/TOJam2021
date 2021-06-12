@@ -10,17 +10,10 @@ public class BatteryScript : MoveablePawnScript
     private Light poweringLight;
 
     private bool bAtChargingStation = false;
-    private bool bIsCharging = false;
 
-    private BatteryScript batteryScriptRef1;
-    private BatteryScript batteryScriptRef2;
-    private BatteryScript batteryScriptRef3;
+    private BatteryScript otherBatteryRef;
 
-    private bool battery1Close = false;
-    private bool battery2Close = false;
-    private bool battery3Close = false;
-
-    private string stringID;
+    private bool otherBatteryClose = false;
 
     // Start is called before the first frame update
     void Start()
@@ -35,11 +28,9 @@ public class BatteryScript : MoveablePawnScript
 
         //Setup batteryscript references
         if (this.gameObject.tag != "Battery1")
-            batteryScriptRef1 = GameObject.FindGameObjectWithTag("Battery1").GetComponent<BatteryScript>();
+            otherBatteryRef = GameObject.FindGameObjectWithTag("Battery1").GetComponent<BatteryScript>();
         if (this.gameObject.tag != "Battery2")
-            batteryScriptRef2 = GameObject.FindGameObjectWithTag("Battery2").GetComponent<BatteryScript>();
-        if (this.gameObject.tag != "Battery3")
-            batteryScriptRef3 = GameObject.FindGameObjectWithTag("Battery3").GetComponent<BatteryScript>();
+            otherBatteryRef = GameObject.FindGameObjectWithTag("Battery2").GetComponent<BatteryScript>();
 
         //Get the player script
         playerScript = player.GetComponent<GameboyScript>();
@@ -47,9 +38,6 @@ public class BatteryScript : MoveablePawnScript
         //set the charging light to zero
         poweringLight = GetComponent<Light>();
         poweringLight.intensity = 0f;
-
-        //Save the string of the ID
-        stringID = this.gameObject.tag;
     }
 
     // Update is called once per frame
@@ -59,7 +47,7 @@ public class BatteryScript : MoveablePawnScript
         base.Update();
 
         //If the charging station can't move, stop it from moving
-        if(!bCanMove)
+        if (!bCanMove)
         {
             OutOfEnergy();
         }
@@ -75,15 +63,15 @@ public class BatteryScript : MoveablePawnScript
             //At the charging station
             Debug.Log("Entering Charging Station");
             bAtChargingStation = true;
-            StartCharging();
+            StartCharging(true);
 
             //When entering the charging station, check if there are other batteries nearby
-            CheckOtherBatteries("", true);
+            PowerOtherBatteries(true);
         }
 
 
         //Touching other batteries
-        else if(other.gameObject.tag == "Battery1" || other.gameObject.tag == "Battery2" || other.gameObject.tag == "Battery3")
+        else if (other.gameObject.tag == "Battery1" || other.gameObject.tag == "Battery2")
         {
             //Print out when batteries get close
             Debug.Log(this.gameObject.tag + " is close to " + other.gameObject.tag);
@@ -101,14 +89,14 @@ public class BatteryScript : MoveablePawnScript
             //Leaving the charging station
             Debug.Log("Exiting Charging station");
             bAtChargingStation = false;
-            StopCharging();
+            StartCharging(false);
 
             //Check if there are other batteries nearby
-            CheckOtherBatteries("", false);
+            PowerOtherBatteries(false);
         }
 
         //Leaving other batteries
-        else if (other.gameObject.tag == "Battery1" || other.gameObject.tag == "Battery2" || other.gameObject.tag == "Battery3")
+        else if (other.gameObject.tag == "Battery1" || other.gameObject.tag == "Battery2")
         {
             Debug.Log(this.gameObject.tag + " has moved away from " + other.gameObject.tag);
 
@@ -118,75 +106,33 @@ public class BatteryScript : MoveablePawnScript
 
     private void CheckOtherBatteries(string tag, bool entering)
     {
-        switch (tag)
+        otherBatteryClose = entering;
+
+        if(!bAtChargingStation)
         {
-            case "Battery1":
-                battery1Close = entering;
-                break;
+            if(otherBatteryClose && otherBatteryRef.bAtChargingStation)
+            {
+                StartCharging(true);
+            }
+            else if(otherBatteryClose && !otherBatteryRef.bAtChargingStation)
+            {
+                StartCharging(false);
 
-            case "Battery2":
-                battery2Close = entering;
-                break;
+            }
+            else if(!otherBatteryClose)
+            {
+                StartCharging(false);
 
-            case "Battery3":
-                battery3Close = entering;
-                break;
-
-            default:
-                break;
+            }
         }
+    }
 
-        switch(this.gameObject.tag)
+    private void PowerOtherBatteries(bool powering)
+    {
+        if(otherBatteryClose && !otherBatteryRef.bAtChargingStation)
         {
-            case "Battery1":
-                if(battery2Close && batteryScriptRef2.bIsCharging || battery3Close && batteryScriptRef3.bIsCharging)
-                {
-                    StartCharging();
-                }
-                else
-                {
-                    StopCharging();
-                }
+            otherBatteryRef.StartCharging(powering);
 
-                break;
-
-            case "Battery2":
-                if (battery1Close && batteryScriptRef1.bIsCharging || battery3Close && batteryScriptRef3.bIsCharging)
-                {
-                    StartCharging();
-                }
-                else
-                {
-                    StopCharging();
-                }
-                break;
-
-            case "Battery3":
-                if (battery1Close && batteryScriptRef1.bIsCharging || battery2Close && batteryScriptRef2.bIsCharging)
-                {
-                    StartCharging();
-                }
-                else
-                {
-                    StopCharging();
-                }
-                break;
-
-            default:
-                break;
-        }
-
-        if(battery1Close)
-        {
-            batteryScriptRef1.CheckOtherBatteries(this.gameObject.tag, entering);
-        }
-        if(battery2Close)
-        {
-            batteryScriptRef2.CheckOtherBatteries(this.gameObject.tag, entering);
-        }
-        if (battery3Close)
-        {
-            batteryScriptRef3.CheckOtherBatteries(this.gameObject.tag, entering);
         }
     }
 
@@ -195,17 +141,9 @@ public class BatteryScript : MoveablePawnScript
         playerScript.NoBatteryPower(this.gameObject.tag);
     }
 
-    private void StartCharging()
+    private void StartCharging(bool charging)
     {
-        bIsCharging = true;
-        energyDecayRate = energyRechargeRate;
-        poweringLight.intensity = 30;
-    }
-
-    private void StopCharging()
-    {
-        bIsCharging = false;
-        energyDecayRate = energyDrainRate;
-        poweringLight.intensity = 0;
+        energyDecayRate = charging ? energyRechargeRate : energyDrainRate;
+        poweringLight.intensity = charging ? 30 : 0;
     }
 }

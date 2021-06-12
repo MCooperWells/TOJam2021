@@ -77,12 +77,6 @@ public class PlayerControllerGMTK : MonoBehaviour
             rigidBody = playerPawns[activePlayer].GetComponent<Rigidbody>();
             mainCamera.GetComponent<CameraController>().UpdateCamera(playerPawns[activePlayer]);
         }
-        if (Input.GetKeyUp(KeyCode.Alpha4))
-        {
-            activePlayer = 3;
-            rigidBody = playerPawns[activePlayer].GetComponent<Rigidbody>();
-            mainCamera.GetComponent<CameraController>().UpdateCamera(playerPawns[activePlayer]);
-        }
     }
     
     //Fixed Updated
