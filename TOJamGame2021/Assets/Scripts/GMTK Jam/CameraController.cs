@@ -24,7 +24,6 @@ public class CameraController : MonoBehaviour
     void Update()
     {
         Vector3 goalPos = playerTransform.position;
-        goalPos.y = this.transform.position.y;
         this.transform.position = Vector3.SmoothDamp(transform.position, goalPos, ref velocity, smoothTime);
     }
 

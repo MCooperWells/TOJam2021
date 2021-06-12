@@ -14,12 +14,12 @@ public class BatteryUIDisplay : MonoBehaviour
     {
         energyScript = energyObject.GetComponent<MoveablePawnScript>();
         slider = GetComponent<Slider>();
-        slider.value = energyScript.energyAmount;
+        slider.value = energyScript.GetEenergyAmount();
     }
 
     // Update is called once per frame
     void Update()
     {
-        slider.value = energyScript.energyAmount;
+        slider.value = energyScript.GetEenergyAmount();
     }
 }
