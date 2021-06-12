@@ -14,6 +14,10 @@ public class BatteryScript : MoveablePawnScript
 
     private bool otherBatteryClose = false;
 
+    private bool bFollowPlayer = false;
+
+    private GameObject playerRef;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -27,7 +31,8 @@ public class BatteryScript : MoveablePawnScript
             otherBatteryRef = GameObject.FindGameObjectWithTag("Battery2").GetComponent<BatteryScript>();
 
         //Get the player script
-        playerScript = GameObject.FindGameObjectWithTag("Player").GetComponent<GameboyScript>();
+        playerRef = GameObject.FindGameObjectWithTag("Player");
+        playerScript = playerRef.GetComponent<GameboyScript>();
 
         //set the charging light to zero
         poweringLight = GetComponent<Light>();
@@ -46,6 +51,14 @@ public class BatteryScript : MoveablePawnScript
         if (!bCanMove)
         {
             UpdateGameboyPower(false);
+        }
+    }
+
+    private void FixedUpdate()
+    {
+        if (bFollowPlayer)
+        {
+            transform.position = Vector3.Lerp(this.transform.position, playerRef.transform.position, Time.deltaTime * 3f);
         }
     }
 
@@ -184,5 +197,10 @@ public class BatteryScript : MoveablePawnScript
                     break;
             }
         }
+    }
+
+    public void SetFollowPlayer(bool FollowPlayer)
+    {
+        bFollowPlayer = FollowPlayer;
     }
 }

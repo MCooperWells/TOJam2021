@@ -61,8 +61,9 @@ public class MoveablePawnScript : MonoBehaviour
         }
     }
 
-    virtual public void SpacebarActionEvent()
-    {
+    virtual public void SpacebarActionEvent() { }
+    
+    virtual public void ShiftActionEvent() { }
 
-    }
+    virtual public void CtrlActionEvent() { }
 }

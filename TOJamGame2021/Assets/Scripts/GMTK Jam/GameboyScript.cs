@@ -108,4 +108,28 @@ public class GameboyScript : MoveablePawnScript
         screenLight.intensity = bScreenLightOn ? 30f : 0f;
         energyDecayRate += bScreenLightOn ? screenDrainAmount : -screenDrainAmount;   
     }
+
+    override public void ShiftActionEvent()
+    {
+        if(battery1Close)
+        {
+            batteryScriptRef1.SetFollowPlayer(true);
+        }
+        if(battery2Close)
+        {
+            batteryScriptRef2.SetFollowPlayer(true);
+        }
+    }
+
+    override public void CtrlActionEvent()
+    {
+        if (battery1Close)
+        {
+            batteryScriptRef1.SetFollowPlayer(false);
+        }
+        if (battery2Close)
+        {
+            batteryScriptRef2.SetFollowPlayer(false);
+        }
+    }
 }

@@ -21,7 +21,7 @@ public class CameraController : MonoBehaviour
 
 
     // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
         Vector3 goalPos = playerTransform.position;
         this.transform.position = Vector3.SmoothDamp(transform.position, goalPos, ref velocity, smoothTime);

@@ -18,39 +18,41 @@ public class PlayerControllerGMTK : MonoBehaviour
     private Vector3 moveVelocity;
 
     //array of players and their moveable scripts
-    private GameObject[] playerPawns;
-    private MoveablePawnScript[] playerPawnScripts;
+    private GameObject playerPawn;
+    private GameObject battery1Pawn;
+    private GameObject battery2Pawn;
+
+    private MoveablePawnScript playerPawnScript;
+    private MoveablePawnScript battery1PawnScript;
+    private MoveablePawnScript battery2PawnScript;
 
     //RB component
-    private Rigidbody rigidBody;
-
-    //Number of players
-    private int activePlayer = 0;
-    private int numberOfPawns = 3;
+    private Rigidbody playerRB;
+    private Rigidbody Battery1RB;
+    private Rigidbody Battery2RB;
 
     // Start is called before the first frame update
     void Start()
     {
         mainCamera = GameObject.FindGameObjectWithTag("CameraRoot");
 
-        //Set up the player pawn and scripts
-        playerPawns = new GameObject[numberOfPawns];
-        playerPawnScripts = new MoveablePawnScript[numberOfPawns];
-
         //Get the player and batteries
-        playerPawns[0] = GameObject.FindGameObjectWithTag("Player");
-        playerPawns[1] = GameObject.FindGameObjectWithTag("Battery1");
-        playerPawns[2] = GameObject.FindGameObjectWithTag("Battery2");
+        playerPawn = GameObject.FindGameObjectWithTag("Player");
+        battery1Pawn = GameObject.FindGameObjectWithTag("Battery1");
+        battery2Pawn = GameObject.FindGameObjectWithTag("Battery2");
 
-        //Loop through the pawns and link their scripts
-        for (int i = 0; i < playerPawns.Length; i++)
-        {
-            playerPawnScripts[i] = playerPawns[i].GetComponent<MoveablePawnScript>();
-        }
+        //Get scripts
+        playerPawnScript = playerPawn.GetComponent<MoveablePawnScript>();
+        battery1PawnScript = battery1Pawn.GetComponent<MoveablePawnScript>();
+        battery2PawnScript = battery2Pawn.GetComponent<MoveablePawnScript>();
 
         //Setup the camera and rigid bodies
-        mainCamera.GetComponent<CameraController>().UpdateCamera(playerPawns[activePlayer]);
-        rigidBody = playerPawns[activePlayer].GetComponent<Rigidbody>();
+        mainCamera.GetComponent<CameraController>().UpdateCamera(playerPawn);
+        playerRB = playerPawn.GetComponent<Rigidbody>();
+        Battery1RB = battery1Pawn.GetComponent<Rigidbody>();
+        Battery2RB = battery2Pawn.GetComponent<Rigidbody>();
+
+        playerCanMove = true;
     }
 
     // Update is called once per frame
@@ -61,15 +63,22 @@ public class PlayerControllerGMTK : MonoBehaviour
             SpacebarPress();
         }
 
-            //movement input
-            Vector3 moveInput = new Vector3(Input.GetAxisRaw("Horizontal"), 0.0f, Input.GetAxisRaw("Vertical"));
+        if(Input.GetKeyUp(KeyCode.LeftShift))
+        {
+            ShiftPress();
+        }
 
-        //Get if the current player can move
-        playerCanMove = playerPawnScripts[activePlayer].CanMove();
+        if (Input.GetKeyUp(KeyCode.LeftControl))
+        {
+            CtrlPress();
+        }
+
+        //movement input
+        Vector3 moveInput = new Vector3(Input.GetAxisRaw("Horizontal"), 0.0f, Input.GetAxisRaw("Vertical"));
 
         if ((Input.GetAxisRaw("Horizontal") != 0.0f || Input.GetAxisRaw("Vertical") != 0.0f) && playerCanMove)
         {
-            playerPawns[activePlayer].transform.rotation = Quaternion.LookRotation(moveInput);
+            playerPawn.transform.rotation = Quaternion.LookRotation(moveInput);
             //animator.SetBool("IsMoving", true);
             //StartWalkingSFX(true, 0);
         }
@@ -78,50 +87,29 @@ public class PlayerControllerGMTK : MonoBehaviour
             //animator.SetBool("IsMoving", false);
             //StartWalkingSFX(false, 0);
         }
-
-        if(activePlayer == 0)
-        {
-            moveVelocity = moveInput.normalized * playerSpeed;
-        }
-        else
-        {
-            moveVelocity = moveInput.normalized * batterySpeed;
-        }
-        
-
-        //Changing Characters:
-        if (Input.GetKeyUp(KeyCode.Alpha1))
-        {
-            activePlayer = 0;
-            rigidBody = playerPawns[activePlayer].GetComponent<Rigidbody>();
-            mainCamera.GetComponent<CameraController>().UpdateCamera(playerPawns[activePlayer]);
-        }
-        if (Input.GetKeyUp(KeyCode.Alpha2))
-        {
-            activePlayer = 1;
-            rigidBody = playerPawns[activePlayer].GetComponent<Rigidbody>();
-            mainCamera.GetComponent<CameraController>().UpdateCamera(playerPawns[activePlayer]);
-        }
-        if (Input.GetKeyUp(KeyCode.Alpha3))
-        {
-            activePlayer = 2;
-            rigidBody = playerPawns[activePlayer].GetComponent<Rigidbody>();
-            mainCamera.GetComponent<CameraController>().UpdateCamera(playerPawns[activePlayer]);
-        }
+        moveVelocity = moveInput * playerSpeed;
     }
     
     //Fixed Updated
     void FixedUpdate()
     {
-        if(playerCanMove)
-        {
-            rigidBody.MovePosition(rigidBody.position + moveVelocity * Time.deltaTime);
-        }
-        
+        playerRB.MovePosition(playerRB.position + moveVelocity * Time.deltaTime);  
     }
 
     protected void SpacebarPress()
     {
-        playerPawnScripts[activePlayer].SpacebarActionEvent();
+        playerPawnScript.SpacebarActionEvent();
+    }
+
+    protected void ShiftPress()
+    {
+        Debug.Log("Shift Press!");
+        playerPawnScript.ShiftActionEvent();
+    }
+
+    protected void CtrlPress()
+    {
+        Debug.Log("Ctrl Press!");
+        playerPawnScript.CtrlActionEvent();
     }
 }
