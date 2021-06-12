@@ -50,12 +50,23 @@ public class GameboyScript : MoveablePawnScript
         CheckPower();
     }
 
-    private void CheckPower()
+    public void CheckPower()
     {
         if (battery1Close && batteryScriptRef1.CanMove() || battery2Close && batteryScriptRef2.CanMove())
         {
-            energyDecayRate = energyRechargeRate;
-            chargingLight.intensity = 30;
+            
+            if(battery1Close && batteryScriptRef1.CanMove())
+            {
+                energyDecayRate = energyRechargeRate;
+                chargingLight.intensity = 30;
+                batteryScriptRef1.SetEnergyDrainRate(1);
+            }
+            if (battery2Close && batteryScriptRef2.CanMove())
+            {
+                energyDecayRate = energyRechargeRate;
+                chargingLight.intensity = 30;
+                batteryScriptRef2.SetEnergyDrainRate(1);
+            }
         }
         else
         {
@@ -66,14 +77,23 @@ public class GameboyScript : MoveablePawnScript
 
     private void CheckCurrentBatteries(string tag, bool entering)
     {
+        int tmpInt;
         switch (tag)
         {
             case "Battery1":
                 battery1Close = entering;
+
+                tmpInt = entering ? 1 : 0;
+                batteryScriptRef1.SetEnergyDrainRate(tmpInt); 
+
                 break;
 
             case "Battery2":
                 battery2Close = entering;
+
+                tmpInt = entering ? 1 : 0;
+                batteryScriptRef2.SetEnergyDrainRate(tmpInt);
+
                 break;
 
             default:

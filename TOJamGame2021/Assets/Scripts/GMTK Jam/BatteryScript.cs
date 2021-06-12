@@ -32,6 +32,8 @@ public class BatteryScript : MoveablePawnScript
         //set the charging light to zero
         poweringLight = GetComponent<Light>();
         poweringLight.intensity = 0f;
+
+        SetEnergyDrainRate(0);
     }
 
     // Update is called once per frame
@@ -70,7 +72,7 @@ public class BatteryScript : MoveablePawnScript
             //Print out when batteries get close
             Debug.Log(this.gameObject.tag + " is close to " + other.gameObject.tag);
 
-            CheckOtherBatteries(other.gameObject.tag, true);
+            CheckOtherBatteries(true);
         }
     }
 
@@ -95,6 +97,7 @@ public class BatteryScript : MoveablePawnScript
 
             //Check if there are other batteries nearby
             PowerOtherBatteries(false);
+            playerScript.CheckPower();
         }
 
         //Leaving other batteries
@@ -102,11 +105,12 @@ public class BatteryScript : MoveablePawnScript
         {
             Debug.Log(this.gameObject.tag + " has moved away from " + other.gameObject.tag);
 
-            CheckOtherBatteries(other.gameObject.tag, false);
+            CheckOtherBatteries(false);
+            playerScript.CheckPower();
         }
     }
 
-    private void CheckOtherBatteries(string tag, bool entering)
+    private void CheckOtherBatteries(bool entering)
     {
         otherBatteryClose = entering;
 
@@ -135,7 +139,6 @@ public class BatteryScript : MoveablePawnScript
         if(otherBatteryClose && !otherBatteryRef.bAtChargingStation)
         {
             otherBatteryRef.StartCharging(powering);
-
         }
     }
 
@@ -146,9 +149,40 @@ public class BatteryScript : MoveablePawnScript
 
     private void StartCharging(bool charging)
     {
-        energyDecayRate = charging ? energyRechargeRate : energyDrainRate;
+        int tempInt = charging ? 2 : 0;
+        
+        SetEnergyDrainRate(tempInt);
+
         poweringLight.intensity = charging ? 30 : 0;
         if (charging)
             bCanMove = true;
+    }
+
+    //1 = no decay
+    //2 = drain
+    //3 = charge
+    public void SetEnergyDrainRate(int chargeType)
+    {
+        if(bAtChargingStation || (otherBatteryClose && otherBatteryRef.bAtChargingStation))
+        {
+            energyDecayRate = energyRechargeRate;
+        }
+        else
+        {
+            switch (chargeType)
+            {
+                case 0:
+                    energyDecayRate = 0.0f;
+                    break;
+                case 1:
+                    energyDecayRate = energyDrainRate;
+                    break;
+                case 2:
+                    energyDecayRate = energyRechargeRate;
+                    break;
+                default:
+                    break;
+            }
+        }
     }
 }
